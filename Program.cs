@@ -1,10 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using RegistroPrioridades.BLL;
 using RegistroPrioridades.Components;
+using RegistroPrioridades.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+builder.Services.AddDbContextFactory<Contexto>(op => op.UseSqlite(ConStr));
+builder.Services.AddScoped<PrioridadesBLL>();
 
 var app = builder.Build();
 
