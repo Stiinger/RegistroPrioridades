@@ -24,7 +24,7 @@
                 <ValidationMessage For="@(() => Prioridad.Descripcion)" />
                 @if (descripcionExiste)
                 {
-                    <p class="text-danger">Ya existe una Prioridad con esta descripción.</p>
+                    <p class="text-danger">Ya existe una Prioridad con esta descripción. Intente nuevamente.</p>
                 }
             </div>
             @*Días compromiso:*@
@@ -70,17 +70,17 @@
     {
         if (Validar() && PrioridadesBLL.Guardar(this.Prioridad))
         {
-            Mensaje = "Se guardó correctamente.";
+            Mensaje = "Se guardó correctamente la prioridad.";
         }
         else
-            Mensaje = "No se pudo guardar la prioridad.";
+            Mensaje = "No se pudo guardar la prioridad. Intente nuevamente.";
     }
     public void Eliminar()
     {
         if (PrioridadesBLL.Eliminar(this.Prioridad))
-            Mensaje = "Se eliminó correctamente.";
+            Mensaje = "Se eliminó correctamente la prioridad.";
         else
-            Mensaje = "No se pudo eliminar la prioridad.";
+            Mensaje = "No se pudo eliminar la prioridad. Intente nuevamente.";
     }
     public void Buscar()
     {
