@@ -9,61 +9,63 @@ namespace RegistroPrioridades.BLL
     public class PrioridadesBLL
     {
         private readonly Contexto _contexto;
+
         public PrioridadesBLL(Contexto contexto)
         {
             _contexto = contexto;
         }
 
-        public bool Guardar(Prioridades Prioridad)
+        public async Task<bool> Guardar(Prioridades prioridad)
         {
-            if (!Existe(Prioridad.PrioridadId))
-                return Insertar(Prioridad);
+            if (!await Existe(prioridad.PrioridadId))
+                return await Insertar(prioridad);
             else
-                return Modificar(Prioridad);
+                return await Modificar(prioridad);
         }
-        public bool Existe(int PrioridadId)
+
+        private async Task<bool> Insertar(Prioridades prioridad)
         {
-            return _contexto.Prioridades.Any(p => p.PrioridadId == PrioridadId);
+            _contexto.Prioridades.Add(prioridad);
+            return await _contexto.SaveChangesAsync() > 0;
         }
-        private bool Insertar(Prioridades Prioridad)
+
+        public async Task<bool> Modificar(Prioridades prioridad)
         {
-            _contexto.Prioridades.Add(Prioridad);
-            int cantidad = _contexto.SaveChanges();
+            _contexto.Update(prioridad);
+            return await _contexto.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> Existe(int PrioridadId)
+        {
+            return await _contexto.Prioridades
+                .AnyAsync(p => p.PrioridadId == PrioridadId);
+        }
+
+        public async Task<bool> Eliminar(Prioridades prioridad)
+        {
+            var cantidad = await _contexto.Prioridades
+                .Where(p => p.PrioridadId == prioridad.PrioridadId)
+                .ExecuteDeleteAsync();
+
             return cantidad > 0;
         }
-        private bool Modificar(Prioridades Prioridad)
+
+        public async Task<Prioridades?> Buscar(int prioridadId)
         {
-            _contexto.Update(Prioridad);
-            int cantidad = _contexto.SaveChanges();
-            return cantidad > 0;
+            return await _contexto.Prioridades
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.PrioridadId == prioridadId);
         }
-        public Prioridades? Buscar(int PrioridadId)
+        public async Task<List<Prioridades>> Listar(Expression<Func<Prioridades, bool>> criterio)
         {
-            return _contexto.Prioridades
-                    .AsNoTracking()
-                    .SingleOrDefault(p => p.PrioridadId == PrioridadId);
+            return await _contexto.Prioridades
+                .AsNoTracking()
+                .Where(criterio)
+                .ToListAsync();
         }
         public Prioridades? BuscarDescripcion(string? descripcion)
         {
             return _contexto.Prioridades.SingleOrDefault(p => p.Descripcion == descripcion);
-        }
-
-        public bool Eliminar(Prioridades Prioridad)
-        {
-            var prioridad = _contexto.Prioridades.Find(Prioridad.PrioridadId);
-            if (prioridad != null)
-            {
-                _contexto.Prioridades.Remove(prioridad);
-                return _contexto.SaveChanges() > 0;
-            }
-            return false;
-        }
-        public List<Prioridades> GetList(Expression<Func<Prioridades, bool>> Criterio)
-        {
-            return _contexto.Prioridades
-                    .Where(Criterio)
-                    .AsNoTracking()
-                    .ToList();
         }
     }
 }
