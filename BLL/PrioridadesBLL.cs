@@ -63,9 +63,9 @@ namespace RegistroPrioridades.BLL
                 .Where(criterio)
                 .ToListAsync();
         }
-        public Prioridades? BuscarDescripcion(string? descripcion)
+        public async Task<Prioridades?> BuscarDescripcion(string? descripcion)
         {
-            return _contexto.Prioridades.SingleOrDefault(p => p.Descripcion == descripcion);
+            return await _contexto.Prioridades.FirstOrDefaultAsync(p => p.Descripcion == descripcion);
         }
     }
 }
