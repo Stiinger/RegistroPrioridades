@@ -68,7 +68,7 @@
     }
     public async Task Guardar()
     {
-        if (Validar() && await PrioridadesBLL.Guardar(this.prioridad))
+        if (await Validar() && await PrioridadesBLL.Guardar(this.prioridad))
         {
             Mensaje = "Se guardó correctamente la prioridad.";
         }
@@ -93,12 +93,12 @@
         else
             Mensaje = "No se encontró la prioridad. Ingrese un ID válido.";
     }
-    public bool Validar()
+    public async Task<bool> Validar()
     {
         if (prioridad.PrioridadId < 0 || string.IsNullOrEmpty(prioridad.Descripcion) || prioridad.DiasCompromiso < 0)
             return false;
 
-        var buscar = PrioridadesBLL.BuscarDescripcion(prioridad.Descripcion.ToLower());
+        var buscar = await PrioridadesBLL.BuscarDescripcion(prioridad.Descripcion.ToLower());
 
         if (buscar != null)
         {
