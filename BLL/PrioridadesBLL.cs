@@ -56,16 +56,12 @@ namespace RegistroPrioridades.BLL
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.PrioridadId == prioridadId);
         }
-        public async Task<List<Prioridades>> Listar(Expression<Func<Prioridades, bool>> criterio)
+        public List<Prioridades> Listar(Expression<Func<Prioridades, bool>> criterio)
         {
-            return await _contexto.Prioridades
+            return _contexto.Prioridades
                 .AsNoTracking()
                 .Where(criterio)
-                .ToListAsync();
-        }
-        public async Task<Prioridades?> BuscarDescripcion(string? descripcion)
-        {
-            return await _contexto.Prioridades.SingleOrDefaultAsync(p => p.Descripcion == descripcion);
+                .ToList();
         }
     }
 }

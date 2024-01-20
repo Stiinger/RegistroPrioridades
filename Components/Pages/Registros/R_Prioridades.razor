@@ -22,10 +22,6 @@
                 <label class="form-label">Descripci&oacute;n:</label>
                 <InputText @bind-Value="prioridad.Descripcion" class="form-control"></InputText>
                 <ValidationMessage For="@(() => prioridad.Descripcion)" />
-                @if (descripcionExiste)
-                {
-                    <p class="text-danger">Ya existe una Prioridad con esta descripción. Intente nuevamente.</p>
-                }
             </div>
             @*Días compromiso:*@
             <div>
@@ -68,17 +64,23 @@
     }
     public async Task Guardar()
     {
-        if (await Validar() && await PrioridadesBLL.Guardar(this.prioridad))
+        if (!Validar() && await PrioridadesBLL.Guardar(this.prioridad))
         {
+            Nuevo();
             Mensaje = "Se guardó correctamente la prioridad.";
         }
         else
+        {
+            Nuevo();
             Mensaje = "No se pudo guardar la prioridad. Intente nuevamente.";
+        }
     }
     public async Task Eliminar()
     {
         if (await PrioridadesBLL.Eliminar(this.prioridad))
-            Mensaje = "Se eliminó correctamente la prioridad.";
+        {
+            Nuevo();
+            Mensaje = "Se eliminó correctamente la prioridad.";        }
         else
             Mensaje = "No se pudo eliminar la prioridad. Intente nuevamente.";
     }
@@ -91,21 +93,17 @@
             Mensaje = String.Empty;
         }
         else
-            Mensaje = "No se encontró la prioridad. Ingrese un ID válido.";
-    }
-    public async Task<bool> Validar()
-    {
-        if (prioridad.PrioridadId < 0 || string.IsNullOrEmpty(prioridad.Descripcion) || prioridad.DiasCompromiso < 0)
-            return false;
-
-        var buscar = await PrioridadesBLL.BuscarDescripcion(prioridad.Descripcion.ToLower());
-
-        if (buscar != null)
         {
-            descripcionExiste = true;
-            return false;
+            Nuevo();
+            Mensaje = "No se encontró la prioridad. Ingrese un ID válido.";
         }
-        else
-            return true;
+    }
+    public bool Validar()
+    {
+        descripcionExiste = (PrioridadesBLL.Listar(p =>
+            p.Descripcion!.ToLower() == prioridad.Descripcion!.ToLower()
+            && p.PrioridadId != prioridad.PrioridadId).Any());
+
+        return descripcionExiste;
     }
 }
