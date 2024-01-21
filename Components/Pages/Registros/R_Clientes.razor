@@ -1,0 +1,140 @@
+﻿@page "/Cliente";
+@page "/Cliente/{ClienteId:int}";
+@rendermode InteractiveServer
+@inject ClienteBLL ClienteBLL;
+
+<EditForm Model="cliente" OnValidSubmit="Guardar" FormName="clienteForm">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h1>Registro de Clientes</h1>
+        </div>
+        <div class="card-body">
+            @*Cliente Id:*@
+            <label>ID:</label>
+            <div class="col-6">
+                <InputNumber @bind-Value="cliente.ClienteId" class="id-input"></InputNumber>
+                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="bi bi-search"></i> Buscar</button>
+            </div>
+            <div class='row'>
+                @*Nombres:*@
+                <div class ='col-6'>
+                    <label>Nombres:</label>
+                    <InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ej: Jose Ortega"></InputText>
+                    <ValidationMessage For="@(() => cliente.Nombres)" />
+                </div>
+                @*RNC:*@
+                <div class="col-5">
+                    <label>RNC:</label>
+                    <InputText @bind-Value="cliente.RNC" class="form-control input-group-sm" placeholder="Ej: 40233684113"></InputText>
+                    <ValidationMessage For="@(() => cliente.RNC)" />
+                </div>
+            </div>
+            <div class='row'>
+                @*Teléfono:*@
+                <div class='col-6'>
+                    <label>Tel&eacute;fono:</label>
+                    <InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ej: 5095772170"></InputText>
+                    <ValidationMessage For="@(() => cliente.Telefono)" />
+                </div>
+                @*Celular:*@
+                <div class='col-6'>
+                    <label>Celular:</label>
+                    <InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ej: 8299639714"></InputText>
+                    <ValidationMessage For="@(() => cliente.Celular)" />
+                </div>
+            </div>
+            <div class='row'>
+                @*Email:*@
+                <div class="col-6">
+                    <label>Email:</label>
+                    <InputText @bind-Value="cliente.Email" class="form-control input-group-sm" placeholder="Ej: jose_ortega@gmail.com"></InputText>
+                    <ValidationMessage For="@(() => cliente.Email)" />
+                </div>
+                @*Dirección:*@
+                <div class="col-6">
+                    <label>Direcci&oacute;n:</label>
+                    <InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ej: Calle Alexis Brache #27"></InputText>
+                    <ValidationMessage For="@(() => cliente.Direccion)" />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer ">
+            <button type="button" class="btn btn-primary" @onclick="Nuevo"><i class="bi bi-file-earmark-plus-fill"></i> Nuevo</button>
+            <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Guardar</button>
+            <button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="bi bi-trash3"></i> Eliminar</button>
+        </div>
+    </div>
+</EditForm>
+<label><br />@Mensaje</label>
+
+@code {
+    [Parameter]
+    public int? ClienteId { get; set; }
+    public Cliente cliente = new Cliente();
+    public string Mensaje { get; set; } = string.Empty;
+    private bool clienteExiste = false;
+
+    protected override void OnInitialized()
+    {
+        if (ClienteId.HasValue)
+        {
+            cliente.ClienteId = ClienteId.Value;
+            Buscar();
+        }
+    }
+
+    public void Nuevo()
+    {
+        this.cliente = new Cliente();
+        Mensaje = string.Empty;
+    }
+
+    public async Task Guardar()
+    {
+        if (!Validar() && await ClienteBLL.Guardar(this.cliente))
+        {
+            Nuevo();
+            Mensaje = "Se guardó correctamente el cliente.";
+        }
+        else
+        {
+            Nuevo();
+            Mensaje = "No se pudo guardar el cliente. Intente nuevamente.";
+        }
+    }
+
+    public async Task Eliminar()
+    {
+        if (await ClienteBLL.Eliminar(this.cliente))
+        {
+            Nuevo();
+            Mensaje = "Se eliminó correctamente el cliente.";
+        }
+        else
+            Mensaje = "No se pudo eliminar el cliente. Intente nuevamente.";
+    }
+
+    public async Task Buscar()
+    {
+        var clienteEncontrado = await ClienteBLL.Buscar(cliente.ClienteId);
+        if (clienteEncontrado != null)
+        {
+            cliente = clienteEncontrado;
+            Mensaje = String.Empty;
+        }
+        else
+        {
+            Nuevo();
+            Mensaje = "No se encontró el cliente. Ingrese un ID válido.";
+        }
+    }
+
+    public bool Validar()
+    {
+        clienteExiste = (ClienteBLL.Listar(c =>
+            c.Nombres!.ToLower() == cliente.Nombres!.ToLower()
+            || c.RNC == cliente.RNC).Any());
+        return clienteExiste;
+    }
+}

@@ -80,7 +80,8 @@
         if (await PrioridadesBLL.Eliminar(this.prioridad))
         {
             Nuevo();
-            Mensaje = "Se eliminó correctamente la prioridad.";        }
+            Mensaje = "Se eliminó correctamente la prioridad.";
+        }
         else
             Mensaje = "No se pudo eliminar la prioridad. Intente nuevamente.";
     }
