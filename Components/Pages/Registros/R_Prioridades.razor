@@ -1,8 +1,9 @@
-﻿@page "/RegistroPrioridades";
-@page "/RegistroPrioridades/{PrioridadId:int}";
+﻿@page "/Prioridad";
+@page "/Prioridad/{PrioridadId:int}";
 @rendermode InteractiveServer
 @inject PrioridadesBLL PrioridadesBLL;
 
+<PageTitle>Prioridad</PageTitle>
 <EditForm Model="prioridad" OnValidSubmit="Guardar" FormName="prioridadForm">
     <DataAnnotationsValidator />
     <div class="card">
@@ -46,7 +47,7 @@
 
     [Parameter]
     public int? prioridadId { get; set; }
-    public Prioridades prioridad = new Prioridades();
+    public Prioridad prioridad = new Prioridad();
     public string Mensaje { get; set; } = string.Empty;
     private bool descripcionExiste = false;
 
@@ -60,7 +61,7 @@
     }
     public void Nuevo()
     {
-        this.prioridad = new Prioridades();
+        this.prioridad = new Prioridad();
         Mensaje = string.Empty;
         descripcionExiste = false;
     }

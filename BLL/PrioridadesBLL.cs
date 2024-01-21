@@ -15,7 +15,7 @@ namespace RegistroPrioridades.BLL
             _contexto = contexto;
         }
 
-        public async Task<bool> Guardar(Prioridades prioridad)
+        public async Task<bool> Guardar(Prioridad prioridad)
         {
             if (!await Existe(prioridad.PrioridadId))
                 return await Insertar(prioridad);
@@ -23,13 +23,13 @@ namespace RegistroPrioridades.BLL
                 return await Modificar(prioridad);
         }
 
-        private async Task<bool> Insertar(Prioridades prioridad)
+        private async Task<bool> Insertar(Prioridad prioridad)
         {
             _contexto.Prioridades.Add(prioridad);
             return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Modificar(Prioridades prioridad)
+        public async Task<bool> Modificar(Prioridad prioridad)
         {
             _contexto.Update(prioridad);
             return await _contexto.SaveChangesAsync() > 0;
@@ -41,7 +41,7 @@ namespace RegistroPrioridades.BLL
                 .AnyAsync(p => p.PrioridadId == PrioridadId);
         }
 
-        public async Task<bool> Eliminar(Prioridades prioridad)
+        public async Task<bool> Eliminar(Prioridad prioridad)
         {
             var cantidad = await _contexto.Prioridades
                 .Where(p => p.PrioridadId == prioridad.PrioridadId)
@@ -50,13 +50,13 @@ namespace RegistroPrioridades.BLL
             return cantidad > 0;
         }
 
-        public async Task<Prioridades?> Buscar(int prioridadId)
+        public async Task<Prioridad?> Buscar(int prioridadId)
         {
             return await _contexto.Prioridades
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.PrioridadId == prioridadId);
         }
-        public List<Prioridades> Listar(Expression<Func<Prioridades, bool>> criterio)
+        public List<Prioridad> Listar(Expression<Func<Prioridad, bool>> criterio)
         {
             return _contexto.Prioridades
                 .AsNoTracking()
