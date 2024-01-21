@@ -9,5 +9,6 @@ namespace RegistroPrioridades.DAL
         {
         }
         public DbSet<Prioridades> Prioridades { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }
