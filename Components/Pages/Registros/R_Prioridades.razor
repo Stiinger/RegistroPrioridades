@@ -13,22 +13,24 @@
             @*Prioridad Id:*@
             <label>ID:</label>
             <div class="input-group">
-                <InputNumber @bind-Value="prioridad.PrioridadId" class="id-input"></InputNumber>
-                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="bi bi-search"></i> Buscar</button>
+                <InputNumber @bind-Value="prioridad.PrioridadId" class="id-input"> </InputNumber>
+                <button type="button" class="btn btn-primary" @onclick="Buscar"> <i class="bi bi-search"></i> Buscar</button>
             </div>
-            @*Descripción:*@
-            <div>
-                <br />
-                <label class="form-label">Descripci&oacute;n:</label>
-                <InputText @bind-Value="prioridad.Descripcion" class="form-control"></InputText>
-                <ValidationMessage For="@(() => prioridad.Descripcion)" />
+            <div class ="row">
+                @*Descripción:*@
+                <div class="col-4">
+                    <label>Descripci&oacute;n:</label>
+                    <InputText @bind-Value="prioridad.Descripcion" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => prioridad.Descripcion)" />
+                </div>
             </div>
-            @*Días compromiso:*@
-            <div>
-                <br />
-                <label class="form-label">D&iacute;as compromiso:</label>
-                <InputNumber @bind-Value="prioridad.DiasCompromiso" class="input-group-sm"></InputNumber>
-                <ValidationMessage For="@(() => prioridad.DiasCompromiso)" />
+            <div class="row">
+                @*Días compromiso:*@
+                <div class="col-2">
+                    <label>D&iacute;as compromiso:</label>
+                    <InputNumber @bind-Value="prioridad.DiasCompromiso" class="form-control"></InputNumber>
+                    <ValidationMessage For="@(() => prioridad.DiasCompromiso)" />
+                </div>
             </div>
         </div>
         <div class="card-footer ">
