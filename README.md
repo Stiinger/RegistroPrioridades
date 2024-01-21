@@ -1,17 +1,23 @@
 <details>
   <summary>Registro Prioridades</summary>
   
-  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/b0da6a98-9e8d-4e8b-9b7b-dc635f8c7d25)
+  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/0c3f762b-24c8-44f7-8661-c0f58c0faf6d)
+</details>
+
+<details>
+  <summary>Consulta Prioridades</summary>
+  
+  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/402ee465-144b-449f-aa8c-fcf51a0754ac)
 </details>
 
 <details>
   <summary>Registro Clientes</summary>
   
-  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/97447614-3754-4d1c-9eca-9bd55eec2e22)
+  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/10f71b8f-76df-4b79-9bfd-6753701c799c)
 </details>
 
 <details>
   <summary>Consulta Clientes</summary>
   
-  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/a2855142-30e3-4ab6-a45e-9dd36112531a)
+  ![image](https://github.com/Stiinger/RegistroPrioridades/assets/64880156/6e626464-4b3e-4d16-948f-17286e54fb55)
 </details>
