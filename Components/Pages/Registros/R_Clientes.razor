@@ -18,46 +18,47 @@
             </div>
             <div class='row'>
                 @*Nombres:*@
-                <div class ='col-6'>
+                <div class ='col-4'>
                     <label>Nombres:</label>
-                    <InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ej: Jose Ortega"></InputText>
+                    <InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ejemplo: Jose Antonio Ortega"></InputText>
                     <ValidationMessage For="@(() => cliente.Nombres)" />
                 </div>
                 @*RNC:*@
-                <div class="col-5">
+                <div class="col-4">
                     <label>RNC:</label>
-                    <InputText @bind-Value="cliente.RNC" class="form-control input-group-sm" placeholder="Ej: 40233684113"></InputText>
+                    <InputText @bind-Value="cliente.RNC" class="form-control input-group-sm" placeholder="Ejemplo: 101027797"></InputText>
                     <ValidationMessage For="@(() => cliente.RNC)" />
                 </div>
             </div>
             <div class='row'>
-                @*Teléfono:*@
-                <div class='col-6'>
-                    <label>Tel&eacute;fono:</label>
-                    <InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ej: 5095772170"></InputText>
-                    <ValidationMessage For="@(() => cliente.Telefono)" />
-                </div>
-                @*Celular:*@
-                <div class='col-6'>
-                    <label>Celular:</label>
-                    <InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ej: 8299639714"></InputText>
-                    <ValidationMessage For="@(() => cliente.Celular)" />
-                </div>
-            </div>
-            <div class='row'>
                 @*Email:*@
-                <div class="col-6">
+                <div class="col-4">
                     <label>Email:</label>
-                    <InputText @bind-Value="cliente.Email" class="form-control input-group-sm" placeholder="Ej: jose_ortega@gmail.com"></InputText>
+                    <InputText @bind-Value="cliente.Email" class="form-control input-group-sm" placeholder="Ejemplo: jose_ortega@gmail.com"></InputText>
                     <ValidationMessage For="@(() => cliente.Email)" />
                 </div>
                 @*Dirección:*@
-                <div class="col-6">
+                <div class="col-4">
                     <label>Direcci&oacute;n:</label>
-                    <InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ej: Calle Alexis Brache #27"></InputText>
+                    <InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ejemplo: Calle Papolo Martinez #35, Salcedo"></InputText>
                     <ValidationMessage For="@(() => cliente.Direccion)" />
                 </div>
             </div>
+            <div class='row'>
+                @*Teléfono:*@
+                <div class='col-4'>
+                    <label>Tel&eacute;fono:</label>
+                    <InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ejemplo: 8095772170"></InputText>
+                    <ValidationMessage For="@(() => cliente.Telefono)" />
+                </div>
+                @*Celular:*@
+                <div class='col-4'>
+                    <label>Celular:</label>
+                    <InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ejemplo: 8299639714"></InputText>
+                    <ValidationMessage For="@(() => cliente.Celular)" />
+                </div>
+            </div>
+            
         </div>
         <div class="card-footer ">
             <button type="button" class="btn btn-primary" @onclick="Nuevo"><i class="bi bi-file-earmark-plus-fill"></i> Nuevo</button>

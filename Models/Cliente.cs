@@ -20,9 +20,10 @@ namespace RegistroPrioridades.Models
         public string Celular { get; set; } = string.Empty;
         [Required(ErrorMessage = "El campo RNC no puede estar vacío.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "El RNC debe contener solo numeros.")]
+        [StringLength(maximumLength:9, MinimumLength = 9, ErrorMessage = "El RNC debe contener exactamente {1} dígitos.")]
         public string RNC { get; set; } = string.Empty;
         [Required(ErrorMessage = "El campo Email no puede estar vacío.")]
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Email no válido. EJ: usuario@dominio.com")]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Email no válido. Ejemplo: usuario@dominio.com")]
         public string Email { get; set; } = string.Empty;
         [Required(ErrorMessage = "El campo Dirección no puede estar vacío.")]
         [StringLength(500, MinimumLength = 5, ErrorMessage = "Debe introducir una direccion real.")]
