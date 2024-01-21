@@ -12,6 +12,7 @@ builder.Services.AddRazorComponents()
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContextFactory<Contexto>(op => op.UseSqlite(ConStr));
 builder.Services.AddScoped<PrioridadesBLL>();
+builder.Services.AddScoped<ClienteBLL>();
 
 var app = builder.Build();
 
