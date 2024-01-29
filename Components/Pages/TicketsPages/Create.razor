@@ -51,7 +51,7 @@
 						<InputSelect class="form-select" @bind-Value="ticket.SistemaId">
 							@foreach (var sistema in listaSistemas)
 							{
-								<option value="@sistema.SistemaId">@sistema.SistemaId - @sistema.Nombre</option>
+								<option value="@sistema.SistemaId">@sistema.SistemaId- @sistema.Nombre</option>
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => ticket.SistemaId)" />
@@ -62,7 +62,7 @@
 						<InputSelect class="form-select" @bind-Value="ticket.PrioridadId">
 							@foreach (var prioridad in listaPrioridades)
 							{
-								<option value="@prioridad.PrioridadId">@prioridad.PrioridadId - @prioridad.Descripcion</option>
+								<option value="@prioridad.PrioridadId">@prioridad.PrioridadId- @prioridad.Descripcion</option>
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => ticket.PrioridadId)" />
