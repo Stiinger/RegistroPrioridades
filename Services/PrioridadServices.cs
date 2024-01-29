@@ -3,7 +3,7 @@ using RegistroPrioridades.DAL;
 using RegistroPrioridades.Models;
 using System.Linq.Expressions;
 
-namespace RegistroPrioridades.BLL
+namespace RegistroPrioridades.Services
 {
     public class PrioridadServices
     {
