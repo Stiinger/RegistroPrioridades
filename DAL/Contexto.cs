@@ -8,9 +8,9 @@ namespace RegistroPrioridades.DAL
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
         }
-        public DbSet<Prioridad> Prioridades { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Sistema> Sistemas { get; set; }
-        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Prioridades> Prioridades { get; set; }
+        public DbSet<Clientes> Clientes { get; set; }
+        public DbSet<Sistemas> Sistemas { get; set; }
+        public DbSet<Tickets> Tickets { get; set; }
     }
 }

@@ -39,11 +39,11 @@
 </div>
 
 @code {
-	public List<Sistema> listaSistemas = new List<Sistema>();
+	public List<Sistemas> listaSistemas = new List<Sistemas>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Sistema, bool>> criterio = sistema => sistema.SistemaId > 0;
+		Expression<Func<Sistemas, bool>> criterio = sistema => sistema.SistemaId > 0;
 		listaSistemas = sistemaServices.Listar(criterio);
 	}
 }

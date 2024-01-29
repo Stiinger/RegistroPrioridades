@@ -48,12 +48,12 @@
 </div>
 
 @code {
-	public Cliente cliente { get; set; } = new Cliente();
-	public List<Cliente> listaClientes = new List<Cliente>();
+	public Clientes cliente { get; set; } = new Clientes();
+	public List<Clientes> listaClientes = new List<Clientes>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Cliente, bool>> criterio = cliente => cliente.ClienteId > 0;
+		Expression<Func<Clientes, bool>> criterio = cliente => cliente.ClienteId > 0;
 		listaClientes = clienteServices.Listar(criterio);
 	}
 }

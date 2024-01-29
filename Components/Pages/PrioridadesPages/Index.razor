@@ -41,11 +41,11 @@
 </div>
 
 @code {
-	public List<Prioridad> listaPrioridades = new List<Prioridad>();
+	public List<Prioridades> listaPrioridades = new List<Prioridades>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Prioridad, bool>> criterio = prioridad => prioridad.PrioridadId > 0;
+		Expression<Func<Prioridades, bool>> criterio = prioridad => prioridad.PrioridadId > 0;
 		listaPrioridades = prioridadServices.Listar(criterio);
 	}
 }

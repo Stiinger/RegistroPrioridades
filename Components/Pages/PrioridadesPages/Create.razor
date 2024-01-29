@@ -45,7 +45,7 @@
 </EditForm>
 
 @code {
-    public Prioridad prioridad { get; set; } = new Prioridad();
+    public Prioridades prioridad { get; set; } = new Prioridades();
     public string Mensaje { get; set; } = string.Empty;
 
     public async Task Crear()
@@ -80,7 +80,7 @@
 
     public void Nuevo()
     {
-        prioridad = new Prioridad();
+        prioridad = new Prioridades();
         Mensaje = string.Empty;
     }
 

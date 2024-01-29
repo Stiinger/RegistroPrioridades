@@ -14,7 +14,7 @@ namespace RegistroPrioridades.Services
 			_contexto = context;
 		}
 		
-		public async Task<bool> Guardar(Ticket ticket)
+		public async Task<bool> Guardar(Tickets ticket)
 		{
 			if (!await Existe(ticket.TicketId))
 				return await Insertar(ticket);
@@ -22,13 +22,13 @@ namespace RegistroPrioridades.Services
 				return await Modificar(ticket);
 		}
 
-		public async Task<bool> Insertar(Ticket ticket)
+		public async Task<bool> Insertar(Tickets ticket)
 		{
 			_contexto.Tickets.Add(ticket);
 			return await _contexto.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> Modificar(Ticket ticket)
+		public async Task<bool> Modificar(Tickets ticket)
 		{
 			_contexto.Update(ticket);
 			return await _contexto.SaveChangesAsync() > 0;
@@ -40,7 +40,7 @@ namespace RegistroPrioridades.Services
 				.AnyAsync(t => t.SistemaId == sistemaId);
 		}
 
-		public async Task<bool> Eliminar(Ticket ticket)
+		public async Task<bool> Eliminar(Tickets ticket)
 		{
 			var cantidad = await _contexto.Tickets
 				.Where(t => t.TicketId == ticket.TicketId)
@@ -48,33 +48,33 @@ namespace RegistroPrioridades.Services
 			return cantidad > 0;
 		}
 
-		public async Task<Ticket?> BuscarId(int ticketId)
+		public async Task<Tickets?> BuscarId(int ticketId)
 		{
 			return await _contexto.Tickets
 				.AsNoTracking()
 				.FirstOrDefaultAsync(t => t.TicketId == ticketId);
 		}
 
-		public async Task<Ticket?> BuscarCliente(int clienteId)
+		public async Task<Tickets?> BuscarCliente(int clienteId)
 		{
 			return await _contexto.Tickets
 				.AsNoTracking()
 				.FirstOrDefaultAsync(t => t.ClienteId == clienteId);
 		}
-		public async Task<Ticket?> BuscarFecha(DateTime fecha)
+		public async Task<Tickets?> BuscarFecha(DateTime fecha)
 		{
 			return await _contexto.Tickets
 				.AsNoTracking()
 				.FirstOrDefaultAsync(t => t.Fecha == fecha);
 		}
 
-		public async Task<Ticket?> BuscarDescripcion(string descripcion)
+		public async Task<Tickets?> BuscarDescripcion(string descripcion)
 		{
 			return await _contexto.Tickets
 				.AsNoTracking()
 				.FirstOrDefaultAsync(t => t.Descripcion == descripcion);
 		}
-		public List<Ticket> Listar(Expression<Func<Ticket, bool>> criterio)
+		public List<Tickets> Listar(Expression<Func<Tickets, bool>> criterio)
 		{
 			return _contexto.Tickets
 				.AsNoTracking()

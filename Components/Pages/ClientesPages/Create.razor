@@ -71,7 +71,7 @@
 </EditForm>
 
 @code {
-	public Cliente cliente { get; set; } = new Cliente();
+	public Clientes cliente { get; set; } = new Clientes();
 	public string Mensaje { get; set; } = string.Empty;
 
 	public async Task Crear()
@@ -90,7 +90,7 @@
 
 	public void Nuevo()
 	{
-		cliente = new Cliente();
+		cliente = new Clientes();
 		Mensaje = string.Empty;
 	}
 

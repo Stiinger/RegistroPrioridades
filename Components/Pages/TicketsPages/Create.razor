@@ -92,21 +92,21 @@
 </EditForm>
 
 @code {
-	public Ticket ticket { get; set; } = new Ticket();
+	public Tickets ticket { get; set; } = new Tickets();
 	public string Mensaje { get; set; } = string.Empty;
-	public List<Prioridad> listaPrioridades = new List<Prioridad>();
-	public List<Cliente> listaClientes = new List<Cliente>();
-	public List<Sistema> listaSistemas = new List<Sistema>();
+	public List<Prioridades> listaPrioridades = new List<Prioridades>();
+	public List<Clientes> listaClientes = new List<Clientes>();
+	public List<Sistemas> listaSistemas = new List<Sistemas>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Prioridad, bool>> criterioPrioridad = prioridad => prioridad.PrioridadId > 0;
+		Expression<Func<Prioridades, bool>> criterioPrioridad = prioridad => prioridad.PrioridadId > 0;
 		listaPrioridades = prioridadServices.Listar(criterioPrioridad);
 
-		Expression<Func<Cliente, bool>> criterioCliente = cliente => cliente.ClienteId > 0;
+		Expression<Func<Clientes, bool>> criterioCliente = cliente => cliente.ClienteId > 0;
 		listaClientes = clienteServices.Listar(criterioCliente);
 
-		Expression<Func<Sistema, bool>> criterioSistema = sistema => sistema.SistemaId > 0;
+		Expression<Func<Sistemas, bool>> criterioSistema = sistema => sistema.SistemaId > 0;
 		listaSistemas = sistemaServices.Listar(criterioSistema);
 	}
 
@@ -126,7 +126,7 @@
 
 	public void Nuevo()
 	{
-		ticket = new Ticket();
+		ticket = new Tickets();
 		Mensaje = string.Empty;
 	}
 

@@ -50,12 +50,12 @@
 </div>
 
 @code {
-	public Ticket ticket { get; set; } = new Ticket();
-	public List<Ticket> listaTickets = new List<Ticket>();
+	public Tickets ticket { get; set; } = new Tickets();
+	public List<Tickets> listaTickets = new List<Tickets>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Ticket, bool>> criterio = ticket => ticket.TicketId > 0;
+		Expression<Func<Tickets, bool>> criterio = ticket => ticket.TicketId > 0;
 		listaTickets = ticketServices.Listar(criterio);
 	}
 }

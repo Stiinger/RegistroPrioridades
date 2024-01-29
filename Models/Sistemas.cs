@@ -2,7 +2,7 @@
 
 namespace RegistroPrioridades.Models
 {
-	public class Sistema
+	public class Sistemas
 	{
 		[Key]
 		public int SistemaId { get; set; }

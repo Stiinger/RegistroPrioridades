@@ -40,12 +40,12 @@
 </div>
 
 @code {
-	public Prioridad prioridad { get; set; } = new Prioridad();
-	public List<Prioridad> listaPrioridades = new List<Prioridad>();
+	public Prioridades prioridad { get; set; } = new Prioridades();
+	public List<Prioridades> listaPrioridades = new List<Prioridades>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Prioridad, bool>> criterio = prioridad => prioridad.PrioridadId > 0;
+		Expression<Func<Prioridades, bool>> criterio = prioridad => prioridad.PrioridadId > 0;
 		listaPrioridades = prioridadServices.Listar(criterio);
 	}
 }

@@ -38,12 +38,12 @@
 </div>
 
 @code {
-	public Sistema prioridad { get; set; } = new Sistema();
-	public List<Sistema> listaSistemas = new List<Sistema>();
+	public Sistemas prioridad { get; set; } = new Sistemas();
+	public List<Sistemas> listaSistemas = new List<Sistemas>();
 
 	protected override void OnInitialized()
 	{
-		Expression<Func<Sistema, bool>> criterio = sistema => sistema.SistemaId > 0;
+		Expression<Func<Sistemas, bool>> criterio = sistema => sistema.SistemaId > 0;
 		listaSistemas = sistemaServices.Listar(criterio);
 	}
 }

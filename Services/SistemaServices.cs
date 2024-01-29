@@ -15,7 +15,7 @@ namespace RegistroPrioridades.Services
 			_contexto = context;
 		}
 
-		public async Task<bool> Guardar(Sistema sistema)
+		public async Task<bool> Guardar(Sistemas sistema)
 		{
 			if (!await Existe(sistema.SistemaId))
 				return await Insertar(sistema);
@@ -23,13 +23,13 @@ namespace RegistroPrioridades.Services
 				return await Modificar(sistema);
 		}
 
-		public async Task<bool> Insertar(Sistema sistema)
+		public async Task<bool> Insertar(Sistemas sistema)
 		{
 			_contexto.Sistemas.Add(sistema);
 			return await _contexto.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> Modificar(Sistema sistema)
+		public async Task<bool> Modificar(Sistemas sistema)
 		{
 			_contexto.Update(sistema);
 			return await _contexto.SaveChangesAsync() > 0;
@@ -40,7 +40,7 @@ namespace RegistroPrioridades.Services
 			return await _contexto.Sistemas.AnyAsync(s => s.SistemaId == sistemaId);
 		}
 
-		public async Task<bool> Eliminar(Sistema sistema)
+		public async Task<bool> Eliminar(Sistemas sistema)
 		{
 			var cantidad = await _contexto.Sistemas
 				.Where(s => s.SistemaId == sistema.SistemaId)
@@ -48,21 +48,21 @@ namespace RegistroPrioridades.Services
 			return cantidad > 0;
 		}
 
-		public async Task<Sistema?> BuscarId(int sistemaId)
+		public async Task<Sistemas?> BuscarId(int sistemaId)
 		{
 			return await _contexto.Sistemas
 				.AsNoTracking()
 				.FirstOrDefaultAsync(s => s.SistemaId == sistemaId);
 		}
 
-		public async Task<Sistema?> BuscarNombre(string nombre)
+		public async Task<Sistemas?> BuscarNombre(string nombre)
 		{
 			return await _contexto.Sistemas
 			.AsNoTracking()
 			.FirstOrDefaultAsync(s => s.Nombre.ToLower() == nombre.ToLower());
 		}
 
-		public List<Sistema> Listar(Expression<Func<Sistema, bool>> criterio)
+		public List<Sistemas> Listar(Expression<Func<Sistemas, bool>> criterio)
 		{
 			return _contexto.Sistemas
 				.AsNoTracking()

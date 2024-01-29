@@ -13,7 +13,7 @@ namespace RegistroPrioridades.Services
             _contexto = contexto;
         }
 
-        public async Task<bool> Guardar(Cliente cliente)
+        public async Task<bool> Guardar(Clientes cliente)
         {
             if (!await Existe(cliente.ClienteId))
                 return await Insertar(cliente);
@@ -21,13 +21,13 @@ namespace RegistroPrioridades.Services
                 return await Modificar(cliente);
         }
 
-        private async Task<bool> Insertar(Cliente cliente)
+        private async Task<bool> Insertar(Clientes cliente)
         {
             _contexto.Clientes.Add(cliente);
             return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> Modificar(Cliente cliente)
+        public async Task<bool> Modificar(Clientes cliente)
         {
             _contexto.Update(cliente);
             return await _contexto.SaveChangesAsync() > 0;
@@ -39,7 +39,7 @@ namespace RegistroPrioridades.Services
                 .AnyAsync(c => c.ClienteId == clienteId);
         }
 
-        public async Task<bool> Eliminar(Cliente cliente)
+        public async Task<bool> Eliminar(Clientes cliente)
         {
             var cantidad = await _contexto.Clientes
                 .Where(c => c.ClienteId == cliente.ClienteId)
@@ -48,27 +48,27 @@ namespace RegistroPrioridades.Services
             return cantidad > 0;
         }
 
-        public async Task<Cliente?> BuscarId(int clienteId)
+        public async Task<Clientes?> BuscarId(int clienteId)
         {
             return await _contexto.Clientes
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ClienteId == clienteId);
         }
 
-        public async Task<Cliente?> BuscarNombre(string nombre)
+        public async Task<Clientes?> BuscarNombre(string nombre)
         {
             return await _contexto.Clientes
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Nombres.ToLower() == nombre.ToLower());
         }
 
-        public async Task<Cliente?> BuscarRNC(string RNC)
+        public async Task<Clientes?> BuscarRNC(string RNC)
         {
             return await _contexto.Clientes
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.RNC == RNC);
         }
-        public List<Cliente> Listar(Expression<Func<Cliente, bool>> criterio)
+        public List<Clientes> Listar(Expression<Func<Clientes, bool>> criterio)
         {
             return _contexto.Clientes
                 .AsNoTracking()

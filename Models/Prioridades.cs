@@ -2,7 +2,7 @@
 
 namespace RegistroPrioridades.Models
 {
-    public class Prioridad
+    public class Prioridades
     {
         [Key]
         public int PrioridadId { get; set; }

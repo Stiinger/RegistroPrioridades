@@ -37,7 +37,7 @@
 </EditForm>
 
 @code {
-    public Sistema sistema { get; set; } = new Sistema();
+    public Sistemas sistema { get; set; } = new Sistemas();
     public string Mensaje { get; set; } = string.Empty;
 
     public async Task Crear()
@@ -72,7 +72,7 @@
 
     public void Nuevo()
     {
-        sistema = new Sistema();
+        sistema = new Sistemas();
         Mensaje = string.Empty;
     }
 
