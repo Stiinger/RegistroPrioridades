@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using RegistroPrioridades.BLL;
+using RegistroPrioridades.Services;
 using RegistroPrioridades.Components;
 using RegistroPrioridades.DAL;
+using RegistroPrioridades.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContextFactory<Contexto>(op => op.UseSqlite(ConStr));
 builder.Services.AddScoped<PrioridadServices>();
 builder.Services.AddScoped<ClienteServices>();
+builder.Services.AddScoped<SistemaServices>();
+builder.Services.AddScoped<TicketServices>();
 
 var app = builder.Build();
 
