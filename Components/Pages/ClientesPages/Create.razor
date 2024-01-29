@@ -71,17 +71,19 @@
 </EditForm>
 
 @code {
-    public Cliente cliente { get; set; } = new Cliente();
-    public string Mensaje { get; set; } = string.Empty;
+	public Cliente cliente { get; set; } = new Cliente();
+	public string Mensaje { get; set; } = string.Empty;
 
-    public async Task Crear()
-    {
-        if (!await Validar() && await clientesServices.Guardar(this.cliente))
-        {
+	public async Task Crear()
+	{
+		if (!await Validar() && await clientesServices.Guardar(this.cliente))
+		{
+			Nuevo();
 			Mensaje = "Se guardó correctamente el cliente.";
 		}
 		else
 		{
+			Nuevo();
 			Mensaje = "No se pudo guardar el cliente.";
 		}
 	}

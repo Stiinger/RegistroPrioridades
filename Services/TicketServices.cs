@@ -55,6 +55,25 @@ namespace RegistroPrioridades.Services
 				.FirstOrDefaultAsync(t => t.TicketId == ticketId);
 		}
 
+		public async Task<Ticket?> BuscarCliente(int clienteId)
+		{
+			return await _contexto.Tickets
+				.AsNoTracking()
+				.FirstOrDefaultAsync(t => t.ClienteId == clienteId);
+		}
+		public async Task<Ticket?> BuscarFecha(DateTime fecha)
+		{
+			return await _contexto.Tickets
+				.AsNoTracking()
+				.FirstOrDefaultAsync(t => t.Fecha == fecha);
+		}
+
+		public async Task<Ticket?> BuscarDescripcion(string descripcion)
+		{
+			return await _contexto.Tickets
+				.AsNoTracking()
+				.FirstOrDefaultAsync(t => t.Descripcion == descripcion);
+		}
 		public List<Ticket> Listar(Expression<Func<Ticket, bool>> criterio)
 		{
 			return _contexto.Tickets

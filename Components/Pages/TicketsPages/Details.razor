@@ -1,0 +1,61 @@
+﻿@page "/DetallesTickets"
+@inject TicketServices ticketServices
+
+<PageTitle>Detalles de Tickets</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		<div class="card-header">
+			<h3><strong>Detalles de Tickets</strong></h3>
+			<a href="/CrearTicket">Crear</a>
+		</div>
+		<div class="card-body">			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Fecha</th>
+						<th>ID Cliente</th>
+						<th>ID Sistema</th>
+						<th>ID Prioridad</th>
+						<th>Solicitado Por</th>
+						<th>Asunto</th>
+						<th>Descripción</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var ticket in listaTickets)
+					{
+						<tr>
+							<td>@ticket.TicketId</td>
+							<td>@ticket.Fecha.ToShortDateString()</td>
+							<td>@ticket.ClienteId</td>
+							<td>@ticket.SistemaId</td>
+							<td>@ticket.PrioridadId</td>
+							<td>@ticket.SolicitadoPor</td>
+							<td>@ticket.Asunto</td>
+							<td>@ticket.Descripcion</td>
+							<td>
+								<a href="/EditarTicket/@ticket.TicketId"><i class="bi bi-pencil-square"></i></a>
+								<a href="/EliminarTicket/@ticket.TicketId"><i class="bi bi-trash3"></i></a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="card-footer">
+			<p><strong>Total de Tickets:</strong> @listaTickets.Count</p>
+		</div>
+	</div>
+</div>
+
+@code {
+	public Ticket ticket { get; set; } = new Ticket();
+	public List<Ticket> listaTickets = new List<Ticket>();
+
+	protected override void OnInitialized()
+	{
+		Expression<Func<Ticket, bool>> criterio = ticket => ticket.TicketId > 0;
+		listaTickets = ticketServices.Listar(criterio);
+	}
+}
