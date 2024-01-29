@@ -1,0 +1,98 @@
+﻿@page "/CrearSistema"
+
+@rendermode InteractiveServer
+@inject SistemaServices sistemaServices
+
+<PageTitle>Crear Nuevo Sistema</PageTitle>
+<EditForm Model="sistema" OnValidSubmit="Crear">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3><strong>Crear Nuevo Sistema</strong></h3>
+                <a href="/DetallesSistemas">Detalles</a>
+            </div>
+            <div class="card-body">
+                @*Sistema Id:*@
+                <label>ID:</label>
+                <div class="input-group">
+                    <InputNumber @bind-Value="sistema.SistemaId" class="id-input"> </InputNumber>
+                    <button type="button" class="btn btn-primary" @onclick="Buscar"> <i class="bi bi-search"></i> Buscar</button>
+                </div>
+                <div class="row">
+                    @*Nombre:*@
+                    <div class="col-4">
+                        <label>Nombre:</label>
+                        <InputText @bind-Value="sistema.Nombre" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => sistema.Nombre)" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
+            </div>
+        </div>
+    </div>
+    @Mensaje
+</EditForm>
+
+@code {
+    public Sistema sistema { get; set; } = new Sistema();
+    public string Mensaje { get; set; } = string.Empty;
+
+    public async Task Crear()
+    {
+        if (await Validar())
+        {
+            Nuevo();
+            Mensaje = "Ya existe un sistema con este nombre.";
+        }
+        else
+        {
+            if (await sistemaServices.Guardar(this.sistema))
+            {
+                Nuevo();
+                Mensaje = "Se guardó correctamente el sistema.";
+            }
+            else
+            {
+                Nuevo();
+                Mensaje = "No se pudo guardar el sistema.";
+            }
+        }
+    }
+
+    public async Task<bool> Validar()
+    {
+        var descripcionExiste = await sistemaServices.BuscarNombre(sistema.Nombre);
+        if (descripcionExiste != null)
+            return true;
+        return false;
+    }
+
+    public void Nuevo()
+    {
+        sistema = new Sistema();
+        Mensaje = string.Empty;
+    }
+
+    public async Task Buscar()
+    {
+        if (sistema.SistemaId <= 0)
+            Mensaje = "Ingrese un ID válido.";
+        else
+        {
+            var prioridadEncontrada = await sistemaServices.BuscarId(sistema.SistemaId);
+            if (prioridadEncontrada != null)
+            {
+                sistema = prioridadEncontrada;
+                Mensaje = String.Empty;
+            }
+            else
+            {
+                Nuevo();
+                Mensaje = "No se ha encontrado ningún sistema con el ID ingresado.";
+            }
+        }
+    }
+}

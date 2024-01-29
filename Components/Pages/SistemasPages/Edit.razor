@@ -1,0 +1,99 @@
+﻿@page "/EditarSistema"
+@page "/EditarSistema/{sistemaId:int}"
+
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject SistemaServices sistemaServices
+
+<PageTitle>Editar Sistema</PageTitle>
+<EditForm Model="sistema" OnValidSubmit="Modificar">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3><strong>Editar Sistema</strong></h3>
+                <a href="/DetallesSistemas">Detalles</a>
+            </div>
+            <div class="card-body">
+                @*Sistema ID:*@
+                <div class="row">
+                    <label>ID:</label>
+                    <div class="col-2">
+                        <InputNumber class="form-control" @bind-Value="sistema.SistemaId"></InputNumber>
+                    </div>
+                </div>
+                <div class="row">
+                    @*Nombre:*@
+                    <div class="col-4">
+                        <label>Nombre:</label>
+                        <InputText @bind-Value="sistema.Nombre" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => sistema.Nombre)" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-floppy-fill" /> Modificar</button>
+            </div>
+        </div>
+    </div>
+    @Mensaje
+</EditForm>
+
+@code {
+    [Parameter]
+    public int sistemaId { get; set; }
+    public Sistema sistema { get; set; } = new Sistema();
+    public string Mensaje { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        sistema = await sistemaServices.BuscarId(sistemaId);
+    }
+
+    public async Task Modificar()
+    {
+        if (await Validar())
+            Mensaje = "Ya existe un sistema con este nombre.";
+        else
+        {
+            if (await sistemaServices.Guardar(this.sistema))
+                VolverAtras();
+            else
+                Mensaje = "No se pudo modificar el sistema.";
+        }
+    }
+
+    void VolverAtras()
+    {
+        NavigationManager.NavigateTo("/DetallesSistemas");
+    }
+
+    public async Task<bool> Validar()
+    {
+        var descripcionEncontrada = await sistemaServices.BuscarNombre(sistema.Nombre);
+        if (descripcionEncontrada != null)
+            return true;
+        return false;
+    }
+
+    public async Task Buscar()
+    {
+        if (sistema.SistemaId <= 0)
+            Mensaje = "Ingrese un ID válido.";
+        else
+        {
+            var prioridadEncontrada = await sistemaServices.BuscarId(sistema.SistemaId);
+            if (prioridadEncontrada != null)
+            {
+                sistema = prioridadEncontrada;
+                Mensaje = String.Empty;
+            }
+            else
+            {
+                Mensaje = "No se ha encontrado ningun sistema con el ID ingresado.";
+                await Task.Delay(2000);
+                VolverAtras();
+            }
+        }
+    }
+}
