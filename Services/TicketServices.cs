@@ -14,7 +14,7 @@ namespace RegistroPrioridades.Services
 			_contexto = context;
 		}
 		
-		public async Task<bool> Crear(Ticket ticket)
+		public async Task<bool> Guardar(Ticket ticket)
 		{
 			if (!await Existe(ticket.TicketId))
 				return await Insertar(ticket);

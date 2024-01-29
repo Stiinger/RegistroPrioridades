@@ -15,7 +15,7 @@ namespace RegistroPrioridades.Services
 			_contexto = context;
 		}
 
-		public async Task<bool> Crear(Sistema sistema)
+		public async Task<bool> Guardar(Sistema sistema)
 		{
 			if (!await Existe(sistema.SistemaId))
 				return await Insertar(sistema);
