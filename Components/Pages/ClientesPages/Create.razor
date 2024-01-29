@@ -20,7 +20,7 @@
 				</div>
 				<div class='row'>
 					@*Nombres:*@
-					<div class='col-4'>
+					<div class="col-4">
 						<label>Nombres:</label>
 						<InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ejemplo: Jose Antonio Ortega"></InputText>
 						<ValidationMessage For="@(() => cliente.Nombres)" />
@@ -48,13 +48,13 @@
 				</div>
 				<div class='row'>
 					@*Teléfono:*@
-					<div class='col-4'>
+					<div class="col-4">
 						<label>Tel&eacute;fono:</label>
 						<InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ejemplo: 8095772170"></InputText>
 						<ValidationMessage For="@(() => cliente.Telefono)" />
 					</div>
 					@*Celular:*@
-					<div class='col-4'>
+					<div class="col-4">
 						<label>Celular:</label>
 						<InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ejemplo: 8299639714"></InputText>
 						<ValidationMessage For="@(() => cliente.Celular)" />

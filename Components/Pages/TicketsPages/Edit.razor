@@ -22,15 +22,15 @@
 				<div class="col-2">
 					<InputNumber class="form-control" @bind-Value="ticket.TicketId"></InputNumber>
 				</div>
-				<div class='row'>
+				<div class="row">
 					@*Fecha:*@
-					<div class='col-2'>
+					<div class="col-2">
 						<label>Fecha:</label>
 						<InputDate @bind-Value="ticket.Fecha" class="form-control input-group-sm"></InputDate>
 						<ValidationMessage For="@(() => ticket.Fecha)" />
 					</div>
 					@*SolicitadoPor:*@
-					<div class='col-3'>
+					<div class="col-3">
 						<label>Solicitado Por:</label>
 						<InputSelect class="form-select" @bind-Value="ticket.SolicitadoPor" @oninput="(e) => ActualizarClienteId(e.Value.ToString())">
 							@foreach (var cliente in listaClientes)
@@ -69,15 +69,15 @@
 						<ValidationMessage For="@(() => ticket.PrioridadId)" />
 					</div>
 				</div>
-				<div class='row'>
+				<div class="row">
 					@*Asunto:*@
-					<div class='col-3'>
+					<div class="col-3">
 						<label>Asunto:</label>
 						<InputText @bind-Value="ticket.Asunto" class="form-control input-group-sm" placeholder="Ingrese un título para el ticket."></InputText>
 						<ValidationMessage For="@(() => ticket.Asunto)" />
 					</div>
 					@*Descripción:*@
-					<div class='col-9'>
+					<div class="col-9">
 						<label>Descripci&oacute;n:</label>
 						<InputText @bind-Value="ticket.Descripcion" class="form-control input-group-sm" placeholder="Explique aquí el problema."></InputText>
 						<ValidationMessage For="@(() => ticket.Descripcion)" />
