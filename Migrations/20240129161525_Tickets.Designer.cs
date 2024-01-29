@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroPrioridades.DAL;
 
@@ -10,66 +11,68 @@ using RegistroPrioridades.DAL;
 namespace RegistroPrioridades.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20240129161525_Tickets")]
+    partial class Tickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
             modelBuilder.Entity("RegistroPrioridades.Models.Cliente", b =>
-            {
-                b.Property<int>("ClienteId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("INTEGER");
+                {
+                    b.Property<int>("ClienteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                b.Property<string>("Celular")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("Direccion")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("Email")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("Nombres")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("RNC")
-                    .IsRequired()
-                    .HasMaxLength(9)
-                    .HasColumnType("TEXT");
+                    b.Property<string>("RNC")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("TEXT");
 
-                b.Property<string>("Telefono")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                b.HasKey("ClienteId");
+                    b.HasKey("ClienteId");
 
                     b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("RegistroPrioridades.Models.Prioridad", b =>
-            {
-                b.Property<int>("PrioridadId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("INTEGER");
+                {
+                    b.Property<int>("PrioridadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                b.Property<string>("Descripcion")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                b.Property<int?>("DiasCompromiso")
-                    .IsRequired()
-                    .HasColumnType("INTEGER");
+                    b.Property<int?>("DiasCompromiso")
+                        .IsRequired()
+                        .HasColumnType("INTEGER");
 
-                b.HasKey("PrioridadId");
+                    b.HasKey("PrioridadId");
 
                     b.ToTable("Prioridades");
                 });
@@ -106,8 +109,7 @@ namespace RegistroPrioridades.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Fecha")
-                        .IsRequired()
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PrioridadId")
