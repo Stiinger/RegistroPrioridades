@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RegistroPrioridades.Components.Pages.Registros;
 using RegistroPrioridades.DAL;
 using RegistroPrioridades.Models;
 using System.Linq.Expressions;
 
 namespace RegistroPrioridades.BLL
 {
-    public class PrioridadesBLL
+    public class PrioridadServices
     {
         private readonly Contexto _contexto;
 
-        public PrioridadesBLL(Contexto contexto)
+        public PrioridadServices(Contexto contexto)
         {
             _contexto = contexto;
         }
@@ -50,11 +49,18 @@ namespace RegistroPrioridades.BLL
             return cantidad > 0;
         }
 
-        public async Task<Prioridad?> Buscar(int prioridadId)
+        public async Task<Prioridad?> BuscarId(int prioridadId)
         {
             return await _contexto.Prioridades
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.PrioridadId == prioridadId);
+        }
+
+        public async Task<Prioridad?> BuscarDescripcion(string descripcion)
+        {
+            return await _contexto.Prioridades
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Descripcion.ToLower() == descripcion.ToLower());
         }
         public List<Prioridad> Listar(Expression<Func<Prioridad, bool>> criterio)
         {
