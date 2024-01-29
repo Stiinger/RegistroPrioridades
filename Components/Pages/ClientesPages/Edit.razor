@@ -14,14 +14,13 @@
 				<a href="/DetallesClientes">Detalles</a>
 			</div>
 			<div class="card-body">
-				@*Cliente ID:*@
-				<div class="row">
-					<label>ID:</label>
-					<div class="col-2">
-						<InputNumber class="form-control" @bind-Value="cliente.ClienteId"></InputNumber>
-					</div>
+				@*Cliente Id:*@
+				<label>ID:</label>
+				<div class="col-6">
+					<InputNumber @bind-Value="cliente.ClienteId" class="id-input"></InputNumber>
+					<button type="button" class="btn btn-primary" @onclick="Buscar"><i class="bi bi-search"></i> Buscar</button>
 				</div>
-				<div class="col-4">
+				<div class='row'>
 					@*Nombres:*@
 					<div class="col-4">
 						<label>Nombres:</label>
@@ -35,7 +34,7 @@
 						<ValidationMessage For="@(() => cliente.RNC)" />
 					</div>
 				</div>
-				<div class="col-4">
+				<div class='row'>
 					@*Email:*@
 					<div class="col-4">
 						<label>Email:</label>
@@ -45,11 +44,11 @@
 					@*Dirección:*@
 					<div class="col-4">
 						<label>Direcci&oacute;n:</label>
-						<InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ejemplo: Calle Papolo Martinez #35, Salcedo"></InputText>
+						<InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ejemplo: Calle Martinez #35, Salcedo"></InputText>
 						<ValidationMessage For="@(() => cliente.Direccion)" />
 					</div>
 				</div>
-				<div class="col-4">
+				<div class='row'>
 					@*Teléfono:*@
 					<div class="col-4">
 						<label>Tel&eacute;fono:</label>
