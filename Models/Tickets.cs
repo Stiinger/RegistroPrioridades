@@ -9,7 +9,7 @@ namespace RegistroPrioridades.Models
         public int TicketId { get; set; }
 		[Required(ErrorMessage = "Debe ingresar una fecha.")]
 		[DataType(DataType.Date)]
-		public DateTime Fecha { get; set; } = DateTime.Today;
+		public DateTime Fecha { get; set; } = DateTime.Now;
 		[ForeignKey("Clientes")]
 		[Required(ErrorMessage = "Campo requerido.")]
 		public int ClienteId { get; set; }
