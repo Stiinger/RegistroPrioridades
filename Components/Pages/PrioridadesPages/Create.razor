@@ -1,0 +1,106 @@
+﻿@page "/CrearPrioridad"
+
+@rendermode InteractiveServer
+@inject PrioridadServices prioridadServices
+
+<PageTitle>Crear Nueva Prioridad</PageTitle>
+<EditForm Model="prioridad" OnValidSubmit="Crear">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3><strong>Crear Nueva Prioridad</strong></h3>
+                <a href="/DetallesPrioridades">Detalles</a>
+            </div>
+            <div class="card-body">
+                @*Prioridad Id:*@
+                <label>ID:</label>
+                <div class="input-group">
+                    <InputNumber @bind-Value="prioridad.PrioridadId" class="id-input"> </InputNumber>
+                    <button type="button" class="btn btn-primary" @onclick="Buscar"> <i class="bi bi-search"></i> Buscar</button>
+                </div>
+                <div class="row">
+                    @*Descripción:*@
+                    <div class="col-4">
+                        <label>Descripci&oacute;n:</label>
+                        <InputText @bind-Value="prioridad.Descripcion" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => prioridad.Descripcion)" />
+                    </div>
+                </div>
+                <div class="row">
+                    @*Días compromiso:*@
+                    <div class="col-2">
+                        <label>D&iacute;as compromiso:</label>
+                        <InputNumber @bind-Value="prioridad.DiasCompromiso" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(() => prioridad.DiasCompromiso)" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
+            </div>
+        </div>
+    </div>
+    @Mensaje
+</EditForm>
+
+@code {
+    public Prioridad prioridad { get; set; } = new Prioridad();
+    public string Mensaje { get; set; } = string.Empty;
+
+    public async Task Crear()
+    {
+        if (await Validar())
+        {
+            Nuevo();
+            Mensaje = "Ya existe una prioridad con esta descripción.";
+        }
+        else
+        {
+            if (await prioridadServices.Guardar(this.prioridad))
+            {
+                Nuevo();
+                Mensaje = "Se guardó correctamente la prioridad.";
+            }
+            else
+            {
+                Nuevo();
+                Mensaje = "No se pudo guardar la prioridad.";
+            }
+        }
+    }
+
+    public async Task<bool> Validar()
+    {
+        var descripcionExiste = await prioridadServices.BuscarDescripcion(prioridad.Descripcion);
+        if (descripcionExiste != null)
+            return true;
+        return false;
+    }
+
+    public void Nuevo()
+    {
+        prioridad = new Prioridad();
+        Mensaje = string.Empty;
+    }
+
+    public async Task Buscar()
+    {
+        if (prioridad.PrioridadId <= 0)
+            Mensaje = "Ingrese un ID válido.";
+        else
+        {
+            var prioridadEncontrada = await prioridadServices.BuscarId(prioridad.PrioridadId);
+            if (prioridadEncontrada != null)
+            {
+                prioridad = prioridadEncontrada;
+                Mensaje = String.Empty;
+            }
+            else
+            {
+                Nuevo();
+                Mensaje = "No se ha encontrado ninguna prioridad con el ID ingresado.";
+            }
+        }
+    }
+}

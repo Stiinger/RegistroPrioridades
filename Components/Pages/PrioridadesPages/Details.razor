@@ -1,0 +1,48 @@
+﻿@page "/DetallesPrioridades"
+@inject PrioridadServices prioridadServices;
+
+<PageTitle>Detalles Prioridades</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		<div class="card-header">
+			<h3><strong>Detalles de Prioridades</strong></h3>
+			<a href="/CrearPrioridad">Crear</a>
+		</div>
+		<div class="card-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Descripci&oacute;n</th>
+						<th>Cantidad D&iacute;as</th>
+					</tr>
+				</thead>
+				<thBody>
+					@foreach (var prioridad in listaPrioridades)
+					{
+						<tr>
+							<td>@prioridad.PrioridadId</td>
+							<td>@prioridad.Descripcion</td>
+							<td>@prioridad.DiasCompromiso</td>
+							<td>
+								<a href="/EditarPrioridad/@prioridad.PrioridadId"><i class="bi bi-pencil-square"></i></a>
+								<a href="/EliminarPrioridad/@prioridad.PrioridadId"><i class="bi bi-trash3"></i></a>
+							</td>
+						</tr>
+					}
+				</thBody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@code {
+	public Prioridad prioridad { get; set; } = new Prioridad();
+	public List<Prioridad> listaPrioridades = new List<Prioridad>();
+
+	protected override void OnInitialized()
+	{
+		Expression<Func<Prioridad, bool>> criterio = prioridad => prioridad.PrioridadId > 0;
+		listaPrioridades = prioridadServices.Listar(criterio);
+	}
+}
