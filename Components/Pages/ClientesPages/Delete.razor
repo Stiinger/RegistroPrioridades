@@ -1,0 +1,71 @@
+﻿@page "/EliminarCliente"
+@page "/EliminarCliente/{clienteId:int}"
+
+@rendermode InteractiveServer
+@inject ClienteServices clienteServices;
+@inject NavigationManager NavigationManager;
+
+<PageTitle>Eliminar Cliente</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		<div class="card-header">
+			<h3><strong>Eliminar Cliente</strong></h3>
+		</div>
+		<div class="card-body">
+			<h4><strong>¿Seguro quieres eliminar este cliente?</strong></h4>
+			<div>
+				<p class="mb-2"><strong>ID:</strong> @cliente.ClienteId</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>Nombre:</strong> @cliente.Nombres</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>RNC:</strong> @cliente.RNC</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>Tel&eacute;fono:</strong> @cliente.Telefono</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>Celular:</strong> @cliente.Celular</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>Email:</strong> @cliente.Email</p>
+			</div>
+			<div>
+				<p class="mb-2"><strong>Direcci&oacute;n:</strong> @cliente.Direccion</p>
+			</div>
+
+			<button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="bi bi-trash3"></i> Eliminar</button>
+			<button type="button" class="btn btn-dark" @onclick="VolverAtras"><i class="bi bi-x-octagon"></i> Cancelar</button>
+		</div>
+		@Mensaje
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int clienteId { get; set; }
+	public Cliente cliente { get; set; } = new Cliente();
+	public string Mensaje { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		cliente = await clienteServices.BuscarId(clienteId);
+	}
+
+	public async Task Eliminar()
+	{
+		var clienteEliminado = await clienteServices.Eliminar(cliente);
+		if (clienteEliminado)
+		{
+			VolverAtras();
+		}
+		else
+			Mensaje = "No se ha podido eliminar el cliente.";
+	}
+
+	void VolverAtras()
+	{
+		NavigationManager.NavigateTo("/DetallesClientes");
+	}
+}

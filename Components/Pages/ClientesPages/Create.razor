@@ -1,0 +1,132 @@
+﻿@page "/CrearCliente"
+@rendermode InteractiveServer
+@inject ClienteServices clientesServices;
+
+<PageTitle>Crear Nuevo Cliente</PageTitle>
+<EditForm Model="cliente" OnValidSubmit="Crear">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			<div class="card-header">
+				<h3><strong>Crear Nuevo Cliente</strong></h3>
+				<a href="/DetallesClientes">Detalles</a>
+			</div>
+			<div class="card-body">
+				@*Cliente Id:*@
+				<label>ID:</label>
+				<div class="col-6">
+					<InputNumber @bind-Value="cliente.ClienteId" class="id-input"></InputNumber>
+					<button type="button" class="btn btn-primary" @onclick="Buscar"><i class="bi bi-search"></i> Buscar</button>
+				</div>
+				<div class='row'>
+					@*Nombres:*@
+					<div class='col-4'>
+						<label>Nombres:</label>
+						<InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ejemplo: Jose Antonio Ortega"></InputText>
+						<ValidationMessage For="@(() => cliente.Nombres)" />
+					</div>
+					@*RNC:*@
+					<div class="col-4">
+						<label>RNC:</label>
+						<InputText @bind-Value="cliente.RNC" class="form-control input-group-sm" placeholder="Ejemplo: 101027797"></InputText>
+						<ValidationMessage For="@(() => cliente.RNC)" />
+					</div>
+				</div>
+				<div class='row'>
+					@*Email:*@
+					<div class="col-4">
+						<label>Email:</label>
+						<InputText @bind-Value="cliente.Email" class="form-control input-group-sm" placeholder="Ejemplo: jose_ortega@gmail.com"></InputText>
+						<ValidationMessage For="@(() => cliente.Email)" />
+					</div>
+					@*Dirección:*@
+					<div class="col-4">
+						<label>Direcci&oacute;n:</label>
+						<InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ejemplo: Calle Martinez #35, Salcedo"></InputText>
+						<ValidationMessage For="@(() => cliente.Direccion)" />
+					</div>
+				</div>
+				<div class='row'>
+					@*Teléfono:*@
+					<div class='col-4'>
+						<label>Tel&eacute;fono:</label>
+						<InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ejemplo: 8095772170"></InputText>
+						<ValidationMessage For="@(() => cliente.Telefono)" />
+					</div>
+					@*Celular:*@
+					<div class='col-4'>
+						<label>Celular:</label>
+						<InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ejemplo: 8299639714"></InputText>
+						<ValidationMessage For="@(() => cliente.Celular)" />
+					</div>
+				</div>
+
+			</div>
+			<div class="card-footer d-flex justify-content-center">
+				<button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
+			</div>
+		</div>
+	</div>
+	@Mensaje
+</EditForm>
+
+@code {
+    public Cliente cliente { get; set; } = new Cliente();
+    public string Mensaje { get; set; } = string.Empty;
+
+    public async Task Crear()
+    {
+        if (!await Validar() && await clientesServices.Guardar(this.cliente))
+        {
+			Mensaje = "Se guardó correctamente el cliente.";
+		}
+		else
+		{
+			Mensaje = "No se pudo guardar el cliente.";
+		}
+	}
+
+	public void Nuevo()
+	{
+		cliente = new Cliente();
+		Mensaje = string.Empty;
+	}
+
+	public async Task<bool> Validar()
+	{
+		var nombre = await clientesServices.BuscarNombre(cliente.Nombres);
+		var rnc = await clientesServices.BuscarRNC(cliente.RNC);
+
+		if (nombre != null)
+		{
+			Mensaje = "Error. Ya existe un cliente con este nombre.";
+			return true;
+		}
+		else if(rnc != null)
+		{
+			Mensaje = "Error. Ya existe un cliente con este RNC.";
+			return true;
+		}
+		return false;
+	}
+
+	public async Task Buscar()
+	{
+		if (cliente.ClienteId <= 0)
+			Mensaje = "Ingrese un ID válido.";
+		else
+		{
+			var clienteEncontrado = await clientesServices.BuscarId(cliente.ClienteId);
+			if (clienteEncontrado != null)
+			{
+				cliente = clienteEncontrado;
+				Mensaje = String.Empty;
+			}
+			else
+			{
+				Nuevo();
+				Mensaje = "No se ha encontrado ningun cliente con el ID ingresado.";
+			}
+		}
+	}
+}

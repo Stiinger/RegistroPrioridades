@@ -1,0 +1,146 @@
+﻿@page "/EditarCliente"
+@page "/EditarCliente/{clienteId:int}"
+
+@inject ClienteServices clienteServices;
+@inject NavigationManager NavigationManager;
+
+<PageTitle>Editar Cliente</PageTitle>
+<EditForm Model="cliente" OnValidSubmit="Modificar" FormName="modificarCliente">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			<div class="card-header">
+				<h3><strong>Editar Cliente</strong></h3>
+				<a href="/DetallesClientes">Detalles</a>
+			</div>
+			<div class="card-body">
+				@*Cliente ID:*@
+				<div class="row">
+					<label>ID:</label>
+					<div class="col-2">
+						<InputNumber class="form-control" @bind-Value="cliente.ClienteId"></InputNumber>
+					</div>
+				</div>
+				<div class='row'>
+					@*Nombres:*@
+					<div class='col-4'>
+						<label>Nombres:</label>
+						<InputText @bind-Value="cliente.Nombres" class="form-control input-group-sm" placeholder="Ejemplo: Jose Antonio Ortega"></InputText>
+						<ValidationMessage For="@(() => cliente.Nombres)" />
+					</div>
+					@*RNC:*@
+					<div class="col-4">
+						<label>RNC:</label>
+						<InputText @bind-Value="cliente.RNC" class="form-control input-group-sm" placeholder="Ejemplo: 101027797"></InputText>
+						<ValidationMessage For="@(() => cliente.RNC)" />
+					</div>
+				</div>
+				<div class='row'>
+					@*Email:*@
+					<div class="col-4">
+						<label>Email:</label>
+						<InputText @bind-Value="cliente.Email" class="form-control input-group-sm" placeholder="Ejemplo: jose_ortega@gmail.com"></InputText>
+						<ValidationMessage For="@(() => cliente.Email)" />
+					</div>
+					@*Dirección:*@
+					<div class="col-4">
+						<label>Direcci&oacute;n:</label>
+						<InputText @bind-Value="cliente.Direccion" class="form-control input-group-sm" placeholder="Ejemplo: Calle Papolo Martinez #35, Salcedo"></InputText>
+						<ValidationMessage For="@(() => cliente.Direccion)" />
+					</div>
+				</div>
+				<div class='row'>
+					@*Teléfono:*@
+					<div class='col-4'>
+						<label>Tel&eacute;fono:</label>
+						<InputText @bind-Value="cliente.Telefono" class="form-control input-group-sm" placeholder="Ejemplo: 8095772170"></InputText>
+						<ValidationMessage For="@(() => cliente.Telefono)" />
+					</div>
+					@*Celular:*@
+					<div class='col-4'>
+						<label>Celular:</label>
+						<InputText @bind-Value="cliente.Celular" class="form-control input-group-sm" placeholder="Ejemplo: 8299639714"></InputText>
+						<ValidationMessage For="@(() => cliente.Celular)" />
+					</div>
+				</div>
+
+			</div>
+			<div class="card-footer d-flex justify-content-center">
+				<button type="submit" class="btn btn-outline-primary"><i class="bi bi-floppy-fill" /> Modificar</button>
+			</div>
+		</div>
+	</div>
+	@Mensaje
+</EditForm>
+
+@code {
+	[Parameter]
+	public int clienteId { get; set; }
+	public Cliente cliente { get; set; } = new Cliente();
+	public string Mensaje { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		cliente = await clienteServices.BuscarId(clienteId);
+	}
+
+	public async Task Modificar()
+	{
+		if (await Validar())
+			return;
+		else
+		{
+			var clienteModificado = await clienteServices.Guardar(cliente);
+			if (clienteModificado)
+			{
+				VolverAtras();
+			}
+			else
+				Mensaje = "No se pudo modificar el cliente.";
+		}
+	}
+
+	void VolverAtras()
+	{
+		NavigationManager.NavigateTo("/DetallesClientes");
+	}
+
+	public async Task<bool> Validar()
+	{
+		var nombre = await clienteServices.BuscarNombre(cliente.Nombres);
+		var rnc = await clienteServices.BuscarRNC(cliente.RNC);
+		if (nombre != null)
+		{
+			Mensaje = "Ya existe un cliente con este nombre.";
+			return true;
+		}
+		if (rnc != null)
+		{
+			Mensaje = "Ya existe un cliente con este RNC.";
+			return true;
+		}
+
+		return false;
+	}
+
+	public async Task Buscar()
+	{
+		if (cliente.ClienteId <= 0)
+			Mensaje = "Ingrese un ID válido.";
+		else
+		{
+			var clienteEncontrado = await clienteServices.BuscarId(cliente.ClienteId);
+			if (clienteEncontrado != null)
+			{
+				cliente = clienteEncontrado;
+				Mensaje = String.Empty;
+			}
+			else
+			{
+				Mensaje = "No se ha encontrado ningun cliente con el ID ingresado.";
+				await Task.Delay(2000);
+				VolverAtras();
+			}
+		}
+	}
+}
