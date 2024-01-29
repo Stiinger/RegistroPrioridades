@@ -6,10 +6,10 @@ namespace RegistroPrioridades.Models
     {
         [Key]
         public int PrioridadId { get; set; }
-        [Required(ErrorMessage = "El campo Descripción no puede estar vacío")]
+        [Required(ErrorMessage = "El campo Descripción no puede estar vacío.")]
         public string? Descripcion { get; set; }
-        [Required(ErrorMessage = "El campo Días Compromiso no puede estar vacío")]
-        [Range(1, 365, ErrorMessage = "Debe ingresar valores entre 1 y 365")]
+        [Required(ErrorMessage = "Campo Requerido.")]
+        [Range(1, 31, ErrorMessage = "Debe ingresar valores entre 1 y 31.")]
         public int? DiasCompromiso { get; set; }
     }
 }

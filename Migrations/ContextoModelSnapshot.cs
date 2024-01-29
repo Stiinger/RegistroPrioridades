@@ -25,12 +25,11 @@ namespace RegistroPrioridades.Migrations
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasMaxLength(12)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasMaxLength(500)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -39,24 +38,24 @@ namespace RegistroPrioridades.Migrations
 
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RNC")
                         .IsRequired()
+                        .HasMaxLength(9)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
-                        .HasMaxLength(12)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ClienteId");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Clientes", (string)null);
                 });
 
-            modelBuilder.Entity("RegistroPrioridades.Models.Prioridades", b =>
+            modelBuilder.Entity("RegistroPrioridades.Models.Prioridad", b =>
                 {
                     b.Property<int>("PrioridadId")
                         .ValueGeneratedOnAdd()
@@ -72,7 +71,7 @@ namespace RegistroPrioridades.Migrations
 
                     b.HasKey("PrioridadId");
 
-                    b.ToTable("Prioridades");
+                    b.ToTable("Prioridades", (string)null);
                 });
 #pragma warning restore 612, 618
         }
