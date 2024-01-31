@@ -11,19 +11,19 @@ namespace RegistroPrioridades.Models
 		[DataType(DataType.Date)]
 		public DateTime Fecha { get; set; } = DateTime.Now;
 		[ForeignKey("Clientes")]
-		[Required(ErrorMessage = "Campo requerido.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public int ClienteId { get; set; }
 		[ForeignKey("Sistemas")]
-		[Required(ErrorMessage = "Campo requerido.")]
-		public int SistemaId { get; set; }
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
+		public int? SistemaId { get; set; }
 		[ForeignKey("Prioridades")]
-		[Required(ErrorMessage = "Campo requerido.")]
-		public int PrioridadId { get; set; }
-		[Required(ErrorMessage = "Campo requerido.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
+		public int? PrioridadId { get; set; }
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public string SolicitadoPor { get; set; } = string.Empty;
-		[Required(ErrorMessage = "Campo requerido.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public string Asunto { get; set; } = string.Empty;
-		[Required(ErrorMessage = "Campo requerido.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 
 		public string Descripcion { get; set; } = string.Empty;
     }
