@@ -6,20 +6,21 @@
 	<div class="card shadow-lg">
 		<div class="card-header">
 			<h3><strong>Detalles de Tickets</strong></h3>
-			<a href="/CrearTicket">Crear</a>
+			<a href="/CrearTicket" class="btn btn-success bi bi-file-earmark-diff-fill"> Crear</a>
 		</div>
 		<div class="card-body">			
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>ID</th>
 						<th>Fecha</th>
-						<th>ID Cliente</th>
-						<th>ID Sistema</th>
-						<th>ID Prioridad</th>
+						<th>Cliente</th>
+						<th>Sistema</th>
+						<th>Prioridad</th>
 						<th>Solicitado Por</th>
 						<th>Asunto</th>
 						<th>Descripción</th>
+						<th>Opciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +45,9 @@
 			</table>
 		</div>
 		<div class="card-footer">
-			<p><strong>Total de Tickets:</strong> @listaTickets.Count</p>
+			<strong>Total de Tickets:</strong> @listaTickets.Count᲼᲼᲼᲼᲼
+			<strong>Clientes con Tickets:</strong> @listaTickets.Select(t => t.ClienteId).Distinct().Count()᲼᲼᲼᲼᲼
+			<strong>Sistemas con Tickets:</strong> @listaTickets.Select(t => t.SistemaId).Distinct().Count()
 		</div>
 	</div>
 </div>

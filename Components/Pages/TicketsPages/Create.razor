@@ -12,7 +12,7 @@
 		<div class="card shadow-lg">
 			<div class="card-header">
 				<h3><strong>Crear Nuevo Ticket</strong></h3>
-				<a href="/DetallesTickets">Detalles</a>
+				<a href="/DetallesTickets" class="btn btn-secondary bi bi-card-list"> Detalles</a>
 			</div>
 			<div class="card-body">
 				@*Ticket Id:*@
@@ -32,6 +32,7 @@
 					<div class="col-3">
 						<label>Solicitado Por:</label>
 						<InputSelect class="form-select" @bind-Value="ticket.SolicitadoPor" @oninput="(e) => ActualizarClienteId(e.Value.ToString())">
+							<option disabled selected>Seleccione una opción</option>
 							@foreach (var cliente in listaClientes)
 							{
 								<option value="@cliente.Nombres">@cliente.Nombres</option>
@@ -39,19 +40,14 @@
 						</InputSelect>
 						<ValidationMessage For="@(() => ticket.SolicitadoPor)" />
 					</div>
-					@*ClienteId:*@
-					<div class="col-sm-1">
-						<label>ID:</label>
-						<InputNumber class="form-control input-group-sm" @bind-Value="ticket.ClienteId" readonly></InputNumber>
-						<ValidationMessage For="@(() => ticket.ClienteId)" />
-					</div>
 					@*SistemaId:*@
 					<div class="col-3">
 						<label>Sistema:</label>
 						<InputSelect class="form-select" @bind-Value="ticket.SistemaId">
+							<option disabled selected>Seleccione una opción</option>
 							@foreach (var sistema in listaSistemas)
 							{
-								<option value="@sistema.SistemaId">@sistema.SistemaId- @sistema.Nombre</option>
+								<option value="@sistema.SistemaId">@sistema.Nombre</option>
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => ticket.SistemaId)" />
@@ -60,9 +56,10 @@
 					<div class="col-3">
 						<label>Prioridad:</label>
 						<InputSelect class="form-select" @bind-Value="ticket.PrioridadId">
+							<option disabled selected>Seleccione una opción</option>
 							@foreach (var prioridad in listaPrioridades)
 							{
-								<option value="@prioridad.PrioridadId">@prioridad.PrioridadId- @prioridad.Descripcion</option>
+								<option value="@prioridad.PrioridadId">@prioridad.Descripcion</option>
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => ticket.PrioridadId)" />
@@ -85,6 +82,8 @@
 			</div>
 			<div class="card-footer d-flex justify-content-center">
 				<button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
+				<div class="col d-flex justify-content-end"><a href="/Tickets" class="btn btn-dark"> Volver</a></div>
+
 			</div>
 		</div>
 	</div>
@@ -112,7 +111,7 @@
 
 	public async Task Crear()
 	{
-		if (!await Validar() && await ticketServices.Guardar(this.ticket))
+		if (await ticketServices.Guardar(this.ticket))
 		{
 			Nuevo();
 			Mensaje = "Se guardó correctamente el ticket.";
@@ -128,20 +127,6 @@
 	{
 		ticket = new Tickets();
 		Mensaje = string.Empty;
-	}
-
-	public async Task<bool> Validar()
-	{
-		var clienteEncontrado = await ticketServices.BuscarCliente(ticket.ClienteId);
-		var fechaEncontrada = await ticketServices.BuscarFecha(ticket.Fecha);
-		var descripcionEncontrada = await ticketServices.BuscarDescripcion(ticket.Descripcion);
-
-		if (clienteEncontrado != null && fechaEncontrada != null && descripcionEncontrada != null)
-		{
-			Mensaje = "Este cliente ya ha registrado un ticket en esta fecha con esta descripción.";
-			return true;
-		}
-		return false;
 	}
 
 	public async Task Buscar()
@@ -168,9 +153,9 @@
 	{
 		if (nombre != null)
 		{
-			var buscar = await clienteServices.BuscarNombre(nombre);
-			if (buscar != null)
-				ticket.ClienteId = buscar.ClienteId;
+			var clienteBuscado = await clienteServices.BuscarNombre(nombre);
+			if (clienteBuscado != null)
+				ticket.ClienteId = clienteBuscado.ClienteId;
 		}
 	}
 
