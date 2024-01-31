@@ -8,10 +8,10 @@
 			<h3><strong>Tickets</strong></h3>
 			<div class="row">
 				<div class="col-2">
-					<a href="/CrearTicket">Crear Ticket</a>
+					<a href="/CrearTicket" class="btn btn-success bi bi-file-earmark-diff-fill"> Crear</a>
 				</div>
 				<div class="col-2">
-					<a href="/DetallesTickets">Detalles</a>
+					<a href="/DetallesTickets" class="btn btn-secondary bi bi-card-list"> Detalles</a>
 				</div>
 			</div>
 		</div>
@@ -21,9 +21,6 @@
 					<tr>
 						<th>ID</th>
 						<th>Fecha</th>
-						<th>ID Cliente</th>
-						<th>ID Sistema</th>
-						<th>ID Prioridad</th>
 						<th>Solicitado Por</th>
 						<th>Asunto</th>
 						<th>Descripción</th>
@@ -35,9 +32,6 @@
 						<tr>
 							<td>@ticket.TicketId</td>
 							<td>@ticket.Fecha.ToShortDateString()</td>
-							<td>@ticket.ClienteId</td>
-							<td>@ticket.SistemaId</td>
-							<td>@ticket.PrioridadId</td>
 							<td>@ticket.SolicitadoPor</td>
 							<td>@ticket.Asunto</td>
 							<td>@ticket.Descripcion</td>
